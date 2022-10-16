@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int two_hundred, hundred, fifty, twenty , tens ,fives, money;
+    printf("enter number: ");
+    scanf("%d", &money);
+    two_hundred = money / 200;
+    printf("two hundreds = %d\n", two_hundred);
+    money = money % 200;
+    hundred = money / 100;
+    printf("hundreds = %d\n", hundred);
+    money = money % 100;
+    fifty = money / 50;
+    printf("fifty = %d\n", fifty);
+    money = money % 50;
+    twenty = money / 20;
+    printf("twenty = %d\n", twenty);
+    money = money % 20;
+     tens = money / 10;
+    printf("tens = %d\n", tens);
+    money = money % 10;
+     fives = money / 5;
+    printf("fives = %d\n", fives);
+    money = money % 5;
+    
+    return 0;
+}

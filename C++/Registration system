@@ -1,0 +1,724 @@
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <cmath>
+
+using namespace std;
+
+// Headers
+string toString (double);
+int toInt (string);
+double toDouble (string);
+string contact(int i);
+string fadress(int i);
+string fbirthday(int i);
+int fdepartment(int i);
+string fGPA(int i);
+string fterm(int i, int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8, int t);
+string gender(int i);
+int id(int i, string resulttypeofid []);
+string nationality(int i);
+string payments(int i, int t);
+string studentsname(int i);
+string typeofid(int i);
+string validityofid(int i);
+
+int main() {
+    string choose;
+    int n;
+    string resultnat[50];
+    string resultname[50];
+    int resultreg[50];
+    string resultgender[50], resulttypeofid[50], resultvalidity[50];
+    int resultnumberid[50];
+    string resultadress[50];
+    string fdepartment[50];
+    string birthday[50];
+    string fcontact[50];
+    int term;
+    string choose3;
+    string gPA[50];
+    string firsttersm[50];
+    string payment[50];
+    int ch;
+    int i;
+
+    i = 0;
+    int j;
+    int c1, c2, c3, c4, c5, c6, c7, c8, t;
+
+    c1 = 0;
+    c2 = 0;
+    c3 = 0;
+    c4 = 0;
+    c5 = 0;
+    c6 = 0;
+    c7 = 0;
+    c8 = 0;
+    string choose2;
+
+    cout << "Enter number of students you want to register" << endl;
+    cin >> n;
+    while (i < n) {
+        resultname[i] = studentsname(i);
+        resultgender[i] = gender(i);
+        birthday[i] = fbirthday(i);
+        resultnat[i] = nationality(i);
+        resulttypeofid[i] = typeofid(i);
+        j = 1;
+        resultnumberid[i] = id(i, resulttypeofid);
+        if (i >= j) {
+            ch = 1;
+            while (ch != 0) {
+                j = 1;
+                if (resultnumberid[i] == resultnumberid[i - j]) {
+                    cout << "your id is wrong try again" << endl;
+                    resultnumberid[i] = id(i, resulttypeofid);
+                } else {
+                    while (i >= j) {
+                        if (resultnumberid[i] == resultnumberid[i - j]) {
+                            j = 1;
+                            cout << "your id is wrong try again" << endl;
+                            resultnumberid[i] = id(i, resulttypeofid);
+                        } else {
+                            j = j + 1;
+                        }
+                    }
+                    ch = ch - 1;
+                }
+            }
+        }
+        resultvalidity[i] = validityofid(i);
+        resultadress[i] = fadress(i);
+        fcontact[i] = contact(i);
+        cout << "If You Want To Change Your Address And Contact enter yes   else enter no  " << endl;
+        cin >> choose3;
+        if (choose3 == "yes") {
+            resultadress[i] = fadress(i);
+            fcontact[i] = contact(i);
+        }
+
+        cout << " Please Enter The Semester Of Student Number  " << i + 1 << endl;
+        cin >> t;
+        while (t > 8) {
+            cout << "There is no semester after  8" << endl;
+            cin >> t;
+        }
+        if (t == 1) {
+            c1 = c1 + 1;
+        } else {
+            if (t == 2) {
+                c2 = c2 + 1;
+            } else {
+                if (t == 3) {
+                    c3 = c3 + 1;
+                } else {
+                    if (t == 4) {
+                        c4 = c4 + 1;
+                    } else {
+                        if (t == 5) {
+                            c5 = c5 + 1;
+                        } else {
+                            if (t == 6) {
+                                c6 = c6 + 1;
+                            } else {
+                                if (t == 7) {
+                                    c7 = c7 + 1;
+                                } else {
+                                    if (t == 8) {
+                                        c8 = c8 + 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        firsttersm[i] = fterm(i, c1, c2, c3, c4, c5, c6, c7, c8, t);
+        cout << firsttersm[i] << "please remember your Registration number " << endl;
+        payment[i] = payments(i, t);
+        gPA[i] = fGPA(i);
+        i = i + 1;
+    }
+    cout << "PLease Enter Yes If You Want to display all students details and NO for only one student " << endl;
+    cin >> choose2;
+    if (choose2 == "yes") {
+        i = 0;
+        while (i < n) {
+            cout << "the name student " << i + 1 << " is " << resultname[i] << endl;
+            cout << "the gender student number " << i + 1 << " is " << resultgender[i] << endl;
+            cout << "the  nationality student " << i + 1 << " is " << resultnat[i] << endl;
+            cout << " the reg number " << i + 1 << " is " << firsttersm[i] << endl;
+            cout << "the number id " << i + 1 << " is " << resultnumberid[i] << endl;
+            cout << resultvalidity[i] << endl;
+            cout << resultadress[i] << endl;
+            cout << birthday[i] << endl;
+            cout << fcontact[i] << endl;
+            cout << payments[i] << endl;
+            cout << gPA[i] << endl;
+            i = i + 1;
+        }
+        cout << "do you want to change any student address please enter yes   else enter no " << endl;
+        cin >> choose3;
+        if (choose3 == "yes") {
+            cout << " please enter the reg. number" << endl;
+            cin >> i;
+            i = i % 10 - 1;
+            resultadress[i] = fadress(i);
+            fcontact[i] = contact(i);
+            cout << resultadress[i] << endl;
+            cout << fcontact[i] << endl;
+        }
+    } else {
+        cout << "Enter the REG number of student you want to display their information" << endl;
+        cin >> i;
+        i = i % 10 - 1;
+        cout << "the name student " << i + 1 << " is " << resultname[i] << endl;
+        cout << "the gender student number " << i + 1 << " is " << resultgender[i] << endl;
+        cout << "the  nationality student " << i + 1 << " is " << resultnat[i] << endl;
+        cout << " the reg number " << i + 1 << " is " << firsttersm[i] << endl;
+        cout << "the number id " << i + 1 << " is " << resultnumberid[i] << endl;
+        cout << resultvalidity[i] << endl;
+        cout << resultadress[i] << endl;
+        cout << birthday[i] << endl;
+        cout << fcontact[i] << endl;
+        cout << payments[i] << endl;
+        cout << gPA[i] << endl;
+    }
+    return 0;
+}
+
+string contact(int i) {
+    string contact;
+    string email;
+
+    cout << " Please Enter E-mail Of Student Number " << i + 1 << endl;
+    cin >> email;
+    int phonenumber;
+
+    cout << "Please Enter The Home Phone Number Of Student " << i + 1 << endl;
+    cin >> phonenumber;
+    int mobilenumber;
+
+    cout << " Please Enter The Mobile Number Of Student " << i + 1 << endl;
+    cin >> mobilenumber;
+    contact = string("the emaail = ") + email + "  the home phone number = " + toString(phonenumber) + "  the mobile number = " + toString(mobilenumber);
+
+    return contact;
+}
+
+string fadress(int i) {
+    string fadress;
+    int fnumber;
+
+    cout << " Please Enter The Flat Number Of Student Number " << i + 1 << endl;
+    cin >> fnumber;
+    int hnumber;
+
+    cout << " Please Enter The House Number Of Student Number " << i + 1 << endl;
+    cin >> hnumber;
+    string sname;
+
+    cout << " PLease Enter The Street Name Of Student Number " << i + 1 << endl;
+    cin >> sname;
+    string area;
+
+    cout << " PLease Enter Area Name Of Student Number  " << i + 1 << endl;
+    cin >> area;
+    string cityname;
+
+    cout << " Please Enter City Name Of Student Number  " << i + 1 << endl;
+    cin >> cityname;
+    string gname;
+
+    cout << " Please Enter The Governorate Name Of Students Number " << i + 1 << endl;
+    cin >> gname;
+    string country;
+
+    cout << " Please Enter The Country Of Students Number " << i + 1 << endl;
+    cin >> country;
+    string pcode;
+
+    cout << " Please Enter The Postalcode Of Student Number  " << i + 1 << endl;
+    cin >> pcode;
+    fadress = string("adress student number") + toString((i + 1)) + "is    flat number is " + toString(fnumber) + "  house number is " + toString(hnumber) + "  street name is " + sname + "  area name is " + area + "  city name is " + cityname + "  governorate name is " + gname + "  country name is " + country + "  postal code is " + pcode;
+
+    return fadress;
+}
+int day, month, year;
+string fbirthday(int i) {
+    string birthday;
+
+    int age, agem, aged;
+    int ch;
+
+    cout << " Please Enter The day Of birth of Student number  " << i + 1 << endl;
+    cin >> day;
+    if (31 < day || day < 1) {
+        ch = 1;
+        while (ch == 1) {
+            cout << "your input false please try again " << endl;
+            cin >> day;
+            if (31 < day || day < 1) {
+            } else {
+                ch = ch - 1;
+            }
+        }
+    }
+    cout << "please enter month of birth of student number " << i + 1 << endl;
+    cin >> month;
+    if (month > 12 || month < 1) {
+        ch = 1;
+        while (ch == 1) {
+            cout << "your input false please try again " << endl;
+            cin >> month;
+            if (month > 12 || month < 1) {
+            } else {
+                ch = ch - 1;
+            }
+        }
+    }
+    cout << "the year of birth of student number " << i + 1 << endl;
+    cin >> year;
+    if (year > 2003 || year < 1980) {
+        ch = 1;
+        while (ch == 1) {
+            cout << "your input false please try again " << endl;
+            cin >> year;
+            if (year > 2003 || year < 1980) {
+            } else {
+                ch = ch - 1;
+            }
+        }
+    }
+    age = 2022 - year;
+    agem = 1 - month;
+    aged = 15 - day;
+    if (agem == 0) {
+        if (aged > 0) {
+            age = age - 1;
+        }
+    } else {
+        age = age - 1;
+    }
+    birthday = string("the birth day student number ") + toString((i + 1)) + " is " + toString(day) + "/" + toString(month) + "/" + toString(year) + " and the age = " + toString(age);
+
+    return birthday;
+}
+
+int fdepartment(int i) {
+    int department;
+
+    cout << " Please Enter The Department Of Student Number" << i + 1 << endl;
+    cout << "Enter 1 or 2 or 3 or 4 or 5 or 6  let 1 = Medicine and 2 = dentistry and 3 = pharmacy and 4 = Engineering and 5 = artificial inteligence and 6 = logistics " << endl;
+    cin >> department;
+
+    return department;
+}
+
+string fGPA(int i) {
+    string result;
+    int ch;
+    double s1, s2, s3, s4, s5, s6, ave;
+    string subject1, subject2, subject3, subject4, subject5, subject6;
+
+    cout << "scan name subject 1" << endl;
+    cin >> subject1;
+    cout << "mark student " << i + 1 << " in " << subject1 << endl;
+    cin >> s1;
+    cout << "scan name subject 2" << endl;
+    cin >> subject2;
+    cout << "mark student " << i + 1 << " in " << subject2 << endl;
+    cin >> s2;
+    cout << "scan name subject 3" << endl;
+    cin >> subject3;
+    cout << "mark student " << i + 1 << " in " << subject3 << endl;
+    cin >> s3;
+    cout << "scan name subject 4" << endl;
+    cin >> subject4;
+    cout << "mark student " << i + 1 << " in " << subject4 << endl;
+    cin >> s4;
+    cout << "scan name subject 5" << endl;
+    cin >> subject5;
+    cout << "mark student " << i + 1 << " in " << subject5 << endl;
+    cin >> s5;
+    cout << "scan name subject 6" << endl;
+    cin >> subject6;
+    cout << "mark student " << i + 1 << " in " << subject6 << endl;
+    cin >> s6;
+    if (s1 > 12 || s2 > 12 || s3 > 12 || s4 > 12 || s4 > 12 || s5 > 12) {
+        ch = 1;
+        while (ch == 1) {
+            if (s1 > 12 || s2 > 12 || s3 > 12 || s4 > 12 || s4 > 12 || s5 > 12) {
+                cout << "scan name subject 1" << endl;
+                cin >> subject1;
+                cout << "mark student " << i + 1 << " in " << subject1 << endl;
+                cin >> s1;
+                cout << "scan name subject 2" << endl;
+                cin >> subject2;
+                cout << "mark student " << i + 1 << " in " << subject2 << endl;
+                cin >> s2;
+                cout << "scan name subject 3" << endl;
+                cin >> subject3;
+                cout << "mark student " << i + 1 << " in " << subject3 << endl;
+                cin >> s3;
+                cout << "scan name subject 4" << endl;
+                cin >> subject4;
+                cout << "mark student " << i + 1 << " in " << subject4 << endl;
+                cin >> s4;
+                cout << "scan name subject 5" << endl;
+                cin >> subject5;
+                cout << "mark student " << i + 1 << " in " << subject5 << endl;
+                cin >> s5;
+                cout << "scan name subject 6" << endl;
+                cin >> subject6;
+                cout << "mark student " << i + 1 << " in " << subject6 << endl;
+                cin >> s6;
+            } else {
+                ch = ch - 1;
+            }
+        }
+    }
+    ave = (s1 + s2 + s3 + s4 + s5 + s6) / 18.0;
+    result = string("the mark ") + subject1 + "is" + toString(s1) + "," + subject2 + "is" + toString(s2) + "," + subject3 + "is" + toString(s3) + "," + subject4 + "is" + toString(s4) + "," + subject5 + "is" + toString(s5) + "," + subject6 + "is" + toString(s6) + "and the average " + toString(ave);
+
+    return result;
+}
+
+string fterm(int i, int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8, int t) {
+    string term;
+
+    if (t == 1) {
+        term = string("the first term student number ") + toString(c1) + " is " + toString(t) + " in year 2022 and the reg number = " + toString((2022000 + c1));
+    } else {
+        if (t == 2) {
+            term = string("the first term student number ") + toString(c2) + " is " + toString(t) + " in year 2021 and the reg number = " + toString((2021000 + c2));
+        } else {
+            if (t == 3) {
+                term = string("the first term student number ") + toString(c3) + " is " + toString(t) + " in year 2020 and the reg number = " + toString((2020000 + c3));
+            } else {
+                if (t == 4) {
+                    term = string("the first term student number ") + toString(c4) + " is " + toString(t) + " in year 2019 and the reg number = " + toString((2019000 + c4));
+                } else {
+                    if (t == 5) {
+                        term = string("the first term student number ") + toString(c5) + " is " + toString(t) + " in year 2018 and the reg number = " + toString((2018000 + c5));
+                    } else {
+                        if (t == 6) {
+                            term = string("the first term student number ") + toString(c6) + " is " + toString(t) + " in year 2017 and the reg number = " + toString((2017000 + c6));
+                        } else {
+                            if (t == 7) {
+                                term = string("the first term student number ") + toString(c7) + " is " + toString(t) + " in year 2016 and the reg number = " + toString((2022000 + c7));
+                            } else {
+                                if (t == 8) {
+                                    term = string("the first term student number ") + toString(c8) + " is " + toString(t) + " in year 2015 and the reg number = " + toString((2021000 + c8));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return term;
+}
+int g;
+string gender(int i) {
+    int ch;
+
+    ch = 1;
+    string gender;
+
+    cout << "Please Enter Gender Of Student " << i + 1 << " Male or Female " << endl;
+    cin >> gender;
+    if (gender == "male"){
+            g=1;
+
+    }
+    else{
+        if (gender == "female") {
+               g=0;
+        }
+        else{
+            ch = 1;
+            while (ch != 0) {
+                if (gender == "male" || gender == "female") {
+                    ch = ch - 1;
+                } else {
+                    cout << "Oops Your Input Is Incorrect Please Try Again";
+                    cin >> gender;
+                }
+            }
+        }
+    }
+ return gender;
+}
+
+
+
+
+
+
+
+int id(int i, string resulttypeofid[]) {
+    long long idn;
+    int ch;
+ cout << " Please Enter The " << resulttypeofid[i] << " Number For Student" << i + 1 << endl;
+        a:
+        cin>>idn;
+        int century=idn/1e13;
+
+        if(century>3||century<2){
+
+            cout<<"your input is wrong try again"<<endl;
+             goto a;
+        }
+
+       int f_year=(idn/1e11);
+         if(f_year%100!=year%100){
+
+        cout<<"your input is wrong try again"<<endl;
+           goto a;
+
+        }
+
+         int f_mon=(idn/1e9);
+
+         if(f_mon%100!=month){
+            cout<<"your input is wrong try again"<<endl;
+            goto a;
+            }
+
+        int f_day=(idn/1e7);
+        if(f_day%100!=day){
+
+            cout<<"your input is wrong try again"<<endl;
+            goto a;
+        }
+
+        ch=idn%10;
+        ch=ch%2;
+        if(ch!=g){
+            cout<<"your input is wrong try again"<<endl;
+            goto a;
+
+                }
+
+    return idn;
+}
+
+string nationality(int i) {
+    string nationality;
+
+    cout << "please enter The nationality student number " << i + 1 << endl;
+    cin >> nationality;
+
+    return nationality;
+}
+
+string payments(int i, int t) {
+    string result;
+    string department, choose;
+    int discount, fristpayment, dis;
+    int d;
+
+    d = fdepartment(i);
+    double total;
+
+    if (d == 1) {
+        department = "Medicine";
+        total = 5225;
+    } else {
+        if (d == 2) {
+            department = "Dentistry";
+            total = 5000;
+        } else {
+            if (d == 3) {
+                department = "Pharmacy";
+                total = 4885;
+            } else {
+                if (d == 4) {
+                    department = "Engineering";
+                    total = 4554;
+                } else {
+                    if (d == 5) {
+                        department = "AI";
+                        total = 4225;
+                    } else {
+                        if (d == 6) {
+                            department = "Logistics";
+                            total = 3565;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    cout << department << endl;
+    cout << "Are paid grant_funded or self_funded (yes if grant_funded or no if self_funded " << endl;
+    cin >> choose;
+    if (choose == "yes") {
+        result = "total is zero";
+    } else {
+        if (t == 1) {
+            cout << "the first payment = 200$" << endl;
+            fristpayment = (int) (total - 200);
+            cout << "Is there a discount ? " << endl;
+            cin >> choose;
+            if (choose == "yes") {
+                cout << "brothers discount press 1  parents working on goverment press 2  parents working on millitary service press 3 " << endl;
+                cin >> discount;
+                if (discount == 1) {
+                    dis = (int) (fristpayment - fristpayment * 0.3);
+                } else {
+                    if (discount == 2) {
+                        dis = (int) (fristpayment - fristpayment * 0.4);
+                    } else {
+                        if (discount == 3) {
+                            dis = (int) (fristpayment - fristpayment * 0.2);
+                        }
+                    }
+                }
+                result = string("you should pay in ") + department + " frist payment is 200 and after calclute is " + toString(fristpayment) + "after discount " + toString(dis);
+            } else {
+                result = string("you should pay in ") + department + " frist payment is 200 and after calclute is " + toString(fristpayment) + "no discount";
+            }
+        } else {
+            cout << total << endl;
+            cout << "Is there a discount ? " << endl;
+            cin >> choose;
+            if (choose == "yes") {
+                cout << "brothers discount press 1  parents working on goverment press 2  parents working on millitary service press 3 " << endl;
+                cin >> discount;
+                if (discount == 1) {
+                    dis = (int) (total - total * 0.3);
+                } else {
+                    if (discount == 2) {
+                        dis = (int) (total - total * 0.4);
+                    } else {
+                        if (discount == 3) {
+                            dis = (int) (total - total * 0.2);
+                        }
+                    }
+                }
+                result = string("your payment in ") + department + "is" + toString(total) + "and after discount is " + toString(dis);
+            } else {
+                result = string("your payment in ") + department + "is" + toString(total) + "no discount";
+            }
+        }
+    }
+
+    return result;
+}
+
+string studentsname(int i) {
+    string fristname;
+    string middlename;
+    string lastname;
+    string name;
+
+    cout << " Please Enter First Name Of Student Number " << i + 1 << endl;
+    cin >> fristname;
+    cout << " Please Enter Middle Name Of Student Number " << i + 1 << endl;
+    cin >> middlename;
+    cout << "Please Enter Last name Of Student Number " << i + 1 << endl;
+    cin >> lastname;
+    name = fristname + " " + middlename + " " + lastname;
+
+    return name;
+}
+
+string typeofid(int i) {
+    string typeofid;
+
+    cout << " Please Enter Type Of Identification Passport Or ID Of student Number  " << i + 1 << endl;
+    cin >> typeofid;
+
+    return typeofid;
+}
+
+string validityofid(int i) {
+    string result;
+    int d, m, y, dv, mv, yv;
+    int ch;
+
+    ch = 1;
+    ch = 1;
+    cout << " Please Enter The End Year Of ID" << endl;
+    cin >> yv;
+    while (ch == 1) {
+        y = yv - 2022;
+        if (y < 0 || yv < 2022 || yv > 2100) {
+            cout << "INVALID Your  Identification Is End " << endl;
+            cin >> yv;
+            y = yv - 2022;
+        } else {
+            ch = ch - 1;
+        }
+    }
+    ch = 1;
+    cout << "Please Enter End month Of ID " << endl;
+    cin >> mv;
+    while (ch == 1) {
+        if (y == 0) {
+            m = mv - 1;
+            if (m < 0 || mv < 1 || mv > 12) {
+                cout << "INVALID Your  Identification Is End" << endl;
+                cin >> mv;
+                m = mv - 1;
+            } else {
+                ch = ch - 1;
+            }
+        } else {
+            m = mv - 1;
+            if (mv < 1 || mv > 12) {
+                cout << "INVALID Your  Identification Is End" << endl;
+                cin >> mv;
+            } else {
+                ch = ch - 1;
+            }
+        }
+    }
+    ch = 1;
+    cout << "PLease Enter End Day Of ID" << endl;
+    cin >> dv;
+    while (ch == 1) {
+        if (m == 0 && y == 0) {
+            d = dv - 20;
+            if (d <= 0 || dv < 1 || dv > 31) {
+                cout << "INVALID Your  Identification Is End" << endl;
+                cin >> dv;
+                d = dv - 20;
+            } else {
+                ch = ch - 1;
+            }
+        } else {
+            if (dv < 1 || dv > 31) {
+                cout << "INVALID Your  Identification Is End" << endl;
+                cin >> dv;
+            } else {
+                ch = ch - 1;
+            }
+        }
+    }
+    result = string("the id student ") + toString((i + 1)) + " end in" + toString(dv) + "/" + toString(mv) + "/" + toString(yv) + " not end yet";
+
+    return result;
+}
+
+// The following implements type conversion functions.
+string toString (double value) { //int also
+    stringstream temp;
+    temp << value;
+    return temp.str();
+}
+
+int toInt (string text) {
+    return atoi(text.c_str());
+}
+
+double toDouble (string text) {
+    return atof(text.c_str());
+}
